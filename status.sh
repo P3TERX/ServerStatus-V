@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: ServerStatus client + server
-#	Version: 1.2
+#	Version: 1.3
 #	Author: P3terChan
 #	Blog: https://www.p3ter.me
 #=================================================
 
-sh_ver="1.2"
+sh_ver="1.3"
 file="/usr/local/ServerStatus"
 web_file="/usr/local/ServerStatus/web"
 server_file="/usr/local/ServerStatus/server"
@@ -781,6 +781,24 @@ post-down iptables-save > /etc/iptables.up.rules" >> /etc/network/interfaces
 		chmod +x /etc/network/interfaces
 	fi
 }
+Update_Shell(){
+	echo -e "当前版本为 [ ${sh_ver} ]，开始检测最新版本..."
+	sh_new_ver=$(wget --no-check-certificate -qO- "https://raw.githubusercontent.com/P3terChan/ServerStatus/master/ServerStatus.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
+	[[ -z ${sh_new_ver} ]] && echo -e "${Error} 检测最新版本失败 !" && exit 0
+	if [[ ${sh_new_ver} != ${sh_ver} ]]; then
+		echo -e "发现新版本[ ${sh_new_ver} ]，是否更新？[Y/n]"
+		stty erase '^H' && read -p "(默认: y):" yn
+		[[ -z "${yn}" ]] && yn="y"
+		if [[ ${yn} == [Yy] ]]; then
+			wget -N --no-check-certificate https://raw.githubusercontent.com/P3terChan/ServerStatus/master/ServerStatus.sh && chmod +x status.sh && bash status.sh
+			echo -e "脚本已更新为最新版本[ ${sh_new_ver} ] !"
+		else
+			echo && echo "	已取消..." && echo
+		fi
+	else
+		echo -e "当前已是最新版本[ ${sh_new_ver} ] !"
+	fi
+}
 menu_client(){
 echo && echo -e " ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
  https://github.com/P3terChan/ServerStatus
@@ -796,7 +814,9 @@ echo && echo -e " ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}
 ——————————————
  ${Green_font_prefix}6.${Font_color_suffix} 设置 客户端配置
  ${Green_font_prefix}7.${Font_color_suffix} 查看 客户端信息
- ${Green_font_prefix}8.${Font_color_suffix} 查看 客户端日志" && echo
+ ${Green_font_prefix}8.${Font_color_suffix} 查看 客户端日志
+——————————————
+ ${Green_font_prefix}9.${Font_color_suffix} 更新脚本" && echo
 if [[ -e ${client_file} ]]; then
 	check_pid_client
 	if [[ ! -z "${PID}" ]]; then
@@ -810,6 +830,9 @@ fi
 echo
 stty erase '^H' && read -p " 请输入数字 [0-8]:" num
 case "$num" in
+	0)
+	menu_server
+	;;
 	1)
 	Install_ServerStatus_client
 	;;
@@ -834,8 +857,8 @@ case "$num" in
 	8)
 	View_client_Log
 	;;
-	0)
-	menu_server
+	9)
+	Update_Shell
 	;;
 	*)
 	echo "请输入正确数字 [0-9]"
@@ -857,7 +880,9 @@ echo && echo -e " ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}
 ——————————————
  ${Green_font_prefix}6.${Font_color_suffix} 设置 服务端配置
  ${Green_font_prefix}7.${Font_color_suffix} 查看 服务端信息
- ${Green_font_prefix}8.${Font_color_suffix} 查看 服务端日志" && echo
+ ${Green_font_prefix}8.${Font_color_suffix} 查看 服务端日志
+——————————————
+ ${Green_font_prefix}9.${Font_color_suffix} 更新脚本" && echo
 if [[ -e ${server_file} ]]; then
 	check_pid_server
 	if [[ ! -z "${PID}" ]]; then
@@ -871,6 +896,9 @@ fi
 echo
 stty erase '^H' && read -p " 请输入数字 [0-9]:" num
 case "$num" in
+	0)
+	menu_client
+	;;
 	1)
 	Install_ServerStatus_server
 	;;
@@ -895,8 +923,8 @@ case "$num" in
 	8)
 	View_server_Log
 	;;
-	0)
-	menu_client
+	9)
+	Update_Shell
 	;;
 	*)
 	echo "请输入正确数字 [0-8]"
