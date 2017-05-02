@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: ServerStatus client + server
-#	Version: 1.0
+#	Version: 1.2
 #	Author: P3terChan
 #	Blog: https://www.p3ter.me
 #=================================================
 
-sh_ver="1.1"
+sh_ver="1.2"
 file="/usr/local/ServerStatus"
 web_file="/usr/local/ServerStatus/web"
 server_file="/usr/local/ServerStatus/server"
@@ -195,7 +195,7 @@ Set_server(){
 		echo -e "请输入 ServerStatus 服务端中网站要设置的 域名[server]
 默认为本机IP为域名，如果要使用本机IP，请留空直接回车"
 		stty erase '^H' && read -p "(默认: 本机IP):" server_s
-		[[ -z "$server_s" ]] && server_s=""
+		[[ -z "$server_s" ]] && server_s="0.0.0.0"
 	else
 		echo -e "请输入 ServerStatus 服务端的 IP/域名[server]"
 		stty erase '^H' && read -p "(默认: 127.0.0.1):" server_s
@@ -209,9 +209,9 @@ Set_server(){
 Set_server_port(){
 	while true
 		do
-		echo -e "请输入 ServerStatus 服务端中网站要设置的 域名/IP的端口[1-65535]（如果是域名的话，一般建议用 80 端口）"
-		stty erase '^H' && read -p "(默认: 80):" server_port_s
-		[[ -z "$server_port_s" ]] && server_port_s="80"
+		echo -e "请输入 ServerStatus 服务端中网站要设置的 域名/IP的端口[1-65535]（如果是域名，建议使用 80 端口）"
+		stty erase '^H' && read -p "(默认: 1888):" server_port_s
+		[[ -z "$server_port_s" ]] && server_port_s="1888"
 		expr ${server_port_s} + 0 &>/dev/null
 		if [[ $? -eq 0 ]]; then
 			if [[ ${server_port_s} -ge 1 ]] && [[ ${server_port_s} -le 65535 ]]; then
@@ -554,6 +554,8 @@ Install_caddy(){
 	stty erase '^H' && read -p "(默认: Y 自动部署):" caddy_yn
 	[[ -z "$caddy_yn" ]] && caddy_yn="y"
 	if [[ "${caddy_yn}" == [Yy] ]]; then
+		Set_server "server"
+		Set_server_port
 		if [[ ! -e "/usr/local/caddy/caddy" ]]; then
 			wget -N --no-check-certificate https://raw.githubusercontent.com/ToyoDAdoubi/doubi/master/caddy_install.sh
 			chmod +x caddy_install.sh
@@ -588,8 +590,6 @@ EOF
 }
 Install_ServerStatus_server(){
 	[[ -e "${server_file}" ]] && echo -e "${Error} 检测到 ServerStatus 服务端已安装 !" && exit 1
-	Set_server "server"
-	Set_server_port
 	echo -e "${Info} 开始安装/配置 依赖..."
 	Installation_dependency "server"
 	Install_caddy
@@ -782,8 +782,8 @@ post-down iptables-save > /etc/iptables.up.rules" >> /etc/network/interfaces
 	fi
 }
 menu_client(){
-echo && echo -e "  ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
-  https://github.com/P3terChan/ServerStatus
+echo && echo -e " ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
+ https://github.com/P3terChan/ServerStatus
   
  ${Green_font_prefix}0.${Font_color_suffix} 切换到 服务端菜单
 ——————————————
@@ -843,8 +843,8 @@ case "$num" in
 esac
 }
 menu_server(){
-echo && echo -e "  ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
-  https://github.com/P3terChan/ServerStatus
+echo && echo -e " ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
+ https://github.com/P3terChan/ServerStatus
   
  ${Green_font_prefix}0.${Font_color_suffix} 切换到 客户端菜单
 ——————————————
