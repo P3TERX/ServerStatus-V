@@ -8,12 +8,12 @@ ServerStatus-V 通过 VnStat 获取月流量数据，如未安装流量数据不
 
 # 目录介绍
 
-* clients  客户端文件
-* server   服务端文件
-* web      网站文件
-* init.d   服务脚本
+* `clients`  客户端文件
+* `server`   服务端文件
+* `web`      网站文件
+* `init.d`   服务脚本
 
-# 安装教程    
+# 安装教程
 
 执行下面的代码下载并运行脚本，如果脚本有更新，也可使用下面的命令来更新。
 ```
@@ -82,51 +82,51 @@ https://github.com/P3terChan/ServerStatus-V
 ```
 # 其他操作
 
-### 客户端：
+## 客户端
 
-启动：service status-client start
+启动：`service status-client start`
 
-停止：service status-client stop
+停止：`service status-client stop`
 
-重启：service status-client restart
+重启：`service status-client restart`
 
-查看状态：service status-client status
+查看状态：`service status-client status`
 
-### 服务端：
+## 服务端
 
-启动：service status-server start
+启动：`service status-server start`
 
-停止：service status-server stop
+停止：`service status-server stop`
 
-重启：service status-server restart
+重启：`service status-server restart`
 
-查看状态：service status-server status
+查看状态：`service status-server status`
 
-### Caddy（HTTP服务）
+## Caddy（HTTP服务）
 
-启动：service caddy start
+启动：`service caddy start`
 
-停止：service caddy stop
+停止：`service caddy stop`
 
-重启：service caddy restart
+重启：`service caddy restart`
 
-查看状态：service caddy status
+查看状态：`service caddy status`
 
-Caddy配置文件：/usr/local/caddy/caddy
+Caddy配置文件：`/usr/local/caddy/caddy`
 
 默认脚本只能一开始安装的时候设置配置文件，更多的Caddy使用方法，可以参考这些教程：https://doub.io/search/caddy
 
-——————————————————————————————————————
+---
 
-安装目录：/usr/local/ServerStatus
+安装目录：`/usr/local/ServerStatus`
 
-网页文件：/usr/local/ServerStatus/web
+网页文件：`/usr/local/ServerStatus/web`
 
-配置文件：/usr/local/ServerStatus/server/config.json
+配置文件：`/usr/local/ServerStatus/server/config.json`
 
-客户端查看日志：tail -f tmp/serverstatus_client.log
+客户端查看日志：`tail -f tmp/serverstatus_client.log`
 
-服务端查看日志：tail -f /tmp/serverstatus_server.log
+服务端查看日志：`tail -f /tmp/serverstatus_server.log`
 
 # 其他说明
 
