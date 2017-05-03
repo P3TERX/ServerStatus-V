@@ -102,6 +102,18 @@ https://github.com/P3terChan/ServerStatus-V
 
 查看状态：`service status-server status`
 
+## 目录
+
+安装目录：`/usr/local/ServerStatus`
+
+网页文件：`/usr/local/ServerStatus/web`
+
+配置文件：`/usr/local/ServerStatus/server/config.json`
+
+客户端查看日志：`tail -f tmp/serverstatus_client.log`
+
+服务端查看日志：`tail -f /tmp/serverstatus_server.log`
+
 ## Caddy（HTTP服务）
 
 启动：`service caddy start`
@@ -115,18 +127,6 @@ https://github.com/P3terChan/ServerStatus-V
 Caddy配置文件：`/usr/local/caddy/caddy`
 
 默认脚本只能一开始安装的时候设置配置文件，更多的Caddy使用方法，可以参考这些教程：https://doub.io/search/caddy
-
----
-
-安装目录：`/usr/local/ServerStatus`
-
-网页文件：`/usr/local/ServerStatus/web`
-
-配置文件：`/usr/local/ServerStatus/server/config.json`
-
-客户端查看日志：`tail -f tmp/serverstatus_client.log`
-
-服务端查看日志：`tail -f /tmp/serverstatus_server.log`
 
 # 其他说明
 
