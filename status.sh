@@ -5,12 +5,12 @@ export PATH
 #=================================================
 #	System Required: CentOS/Debian/Ubuntu
 #	Description: ServerStatus client + server
-#	Version: 1.3
+#	Version: 1.3.1
 #	Author: P3terChan
 #	Blog: https://www.p3ter.me
 #=================================================
 
-sh_ver="1.3"
+sh_ver="1.3.1"
 file="/usr/local/ServerStatus"
 web_file="/usr/local/ServerStatus/web"
 server_file="/usr/local/ServerStatus/server"
@@ -46,10 +46,10 @@ check_sys(){
 	bit=`uname -m`
 }
 check_installed_server_status(){
-	[[ ! -e "${server_file}" ]] && echo -e "${Error} ServerStatus 服务端没有安装，请检查 !" && exit 1
+	[[ ! -e "${server_file}" ]] && echo -e "${Error} ServerStatus-V 服务端没有安装，请检查 !" && exit 1
 }
 check_installed_client_status(){
-	[[ ! -e "${client_file}" ]] && echo -e "${Error} ServerStatus 客户端没有安装，请检查 !" && exit 1
+	[[ ! -e "${client_file}" ]] && echo -e "${Error} ServerStatus-V 客户端没有安装，请检查 !" && exit 1
 }
 check_pid_server(){
 	PID=`ps -ef| grep "sergate"| grep -v grep| grep -v ".sh"| grep -v "init.d"| grep -v "service"| awk '{print $2}'`
@@ -59,63 +59,63 @@ check_pid_client(){
 }
 Download_Server_Status_server(){
 	cd "/usr/local"
-	wget -N --no-check-certificate "https://github.com/P3terChan/ServerStatus/archive/server.zip"
-	[[ ! -e "server.zip" ]] && echo -e "${Error} ServerStatus 服务端下载失败 !" && exit 1
+	wget -N --no-check-certificate "https://github.com/P3terChan/ServerStatus-V/archive/server.zip"
+	[[ ! -e "server.zip" ]] && echo -e "${Error} ServerStatus-V 服务端下载失败 !" && exit 1
 	unzip server.zip && rm -rf server.zip
-	[[ ! -e "ServerStatus-server" ]] && echo -e "${Error} ServerStatus 服务端解压失败 !" && exit 1
+	[[ ! -e "ServerStatus-server" ]] && echo -e "${Error} ServerStatus-V 服务端解压失败 !" && exit 1
 	if [[ ! -e "${file}" ]]; then
 		mv ServerStatus-server ServerStatus
 	else
 		mv ServerStatus-server/* "${file}"
 		rm -rf ServerStatus-server
 	fi
-	[[ ! -e "${server_file}" ]] && echo -e "${Error} ServerStatus 服务端文件夹重命名失败 !" && rm -rf ServerStatus-server && exit 1
+	[[ ! -e "${server_file}" ]] && echo -e "${Error} ServerStatus-V 服务端文件夹重命名失败 !" && rm -rf ServerStatus-server && exit 1
 	cd "${server_file}"
 	make
-	[[ ! -e "sergate" ]] && echo -e "${Error} ServerStatus 服务端安装失败 !" && exit 1
+	[[ ! -e "sergate" ]] && echo -e "${Error} ServerStatus-V 服务端安装失败 !" && exit 1
 }
 Download_Server_Status_client(){
 	cd "/usr/local"
 	[[ ! -e ${file} ]] && mkdir "${file}"
 	cd "${file}"
-	wget -N --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus/master/clients/client-psutil.py"
-	[[ ! -e "client-psutil.py" ]] && echo -e "${Error} ServerStatus 客户端下载失败 !" && exit 1
+	wget -N --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/clients/client-psutil.py"
+	[[ ! -e "client-psutil.py" ]] && echo -e "${Error} ServerStatus-V 客户端下载失败 !" && exit 1
 	mv client-psutil.py status-client.py
-	[[ ! -e "status-client.py" ]] && echo -e "${Error} ServerStatus 服务端文件夹重命名失败 !" && rm -rf client-psutil.py && exit 1
+	[[ ! -e "status-client.py" ]] && echo -e "${Error} ServerStatus-V 客户端文件重命名失败 !" && rm -rf client-psutil.py && exit 1
 }
 Service_Server_Status_server(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus/master/init.d/server_status_server_centos" -O /etc/init.d/status-server; then
-			echo -e "${Error} ServerStatus 服务端服务管理脚本下载失败 !" && exit 1
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/init.d/server_status_server_centos" -O /etc/init.d/status-server; then
+			echo -e "${Error} ServerStatus-V 服务端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-server
 		chkconfig --add status-server
 		chkconfig status-server on
 	else
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus/master/init.d/server_status_server_debian" -O /etc/init.d/status-server; then
-			echo -e "${Error} ServerStatus 服务端服务管理脚本下载失败 !" && exit 1
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/init.d/server_status_server_debian" -O /etc/init.d/status-server; then
+			echo -e "${Error} ServerStatus-V 服务端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-server
 		update-rc.d -f status-server defaults
 	fi
-	echo -e "${Info} ServerStatus 服务端服务管理脚本下载完成 !"
+	echo -e "${Info} ServerStatus-V 服务端服务管理脚本下载完成 !"
 }
 Service_Server_Status_client(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus/master/init.d/server_status_client_centos" -O /etc/init.d/status-client; then
-			echo -e "${Error} ServerStatus 客户端服务管理脚本下载失败 !" && exit 1
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/init.d/server_status_client_centos" -O /etc/init.d/status-client; then
+			echo -e "${Error} ServerStatus-V 客户端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-client
 		chkconfig --add status-client
 		chkconfig status-client on
 	else
-		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus/master/init.d/server_status_client_debian" -O /etc/init.d/status-client; then
-			echo -e "${Error} ServerStatus 客户端服务管理脚本下载失败 !" && exit 1
+		if ! wget --no-check-certificate "https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/init.d/server_status_client_debian" -O /etc/init.d/status-client; then
+			echo -e "${Error} ServerStatus-V 客户端服务管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/status-client
 		update-rc.d -f status-client defaults
 	fi
-	echo -e "${Info} ServerStatus 客户端服务管理脚本下载完成 !"
+	echo -e "${Info} ServerStatus-V 客户端服务管理脚本下载完成 !"
 }
 Installation_dependency(){
 	mode=$1
@@ -181,7 +181,7 @@ Write_server_config(){
 EOF
 }
 Read_config_client(){
-	[[ ! -e ${client_file} ]] && echo -e "${Error} ServerStatus 客户端文件不存在 !" && exit 1
+	[[ ! -e ${client_file} ]] && echo -e "${Error} ServerStatus-V 客户端文件不存在 !" && exit 1
 	client_text="$(cat "${client_file}"|sed 's/\"//g;s/,//g;s/ //g')"
 	client_server="$(echo -e "${client_text}"|grep "SERVER="|awk -F "=" '{print $2}')"
 	client_port="$(echo -e "${client_text}"|grep "PORT="|awk -F "=" '{print $2}')"
@@ -192,12 +192,12 @@ Set_server(){
 	mode=$1
 	[[ -z ${mode} ]] && mode="server"
 	if [[ ${mode} == "server" ]]; then
-		echo -e "请输入 ServerStatus 服务端中网站要设置的 域名[server]
+		echo -e "请输入 ServerStatus-V 服务端中网站要设置的 域名[server]
 默认为本机IP为域名，如果要使用本机IP，请留空直接回车"
 		stty erase '^H' && read -p "(默认: 本机IP):" server_s
 		[[ -z "$server_s" ]] && server_s="0.0.0.0"
 	else
-		echo -e "请输入 ServerStatus 服务端的 IP/域名[server]"
+		echo -e "请输入 ServerStatus-V 服务端的 IP/域名[server]"
 		stty erase '^H' && read -p "(默认: 127.0.0.1):" server_s
 		[[ -z "$server_s" ]] && server_s="127.0.0.1"
 	fi
@@ -209,7 +209,7 @@ Set_server(){
 Set_server_port(){
 	while true
 		do
-		echo -e "请输入 ServerStatus 服务端中网站要设置的 域名/IP的端口[1-65535]（如果是域名，建议使用 80 端口）"
+		echo -e "请输入 ServerStatus-V 服务端中网站要设置的 域名/IP的端口[1-65535]（如果是域名，建议使用 80 端口）"
 		stty erase '^H' && read -p "(默认: 1888):" server_port_s
 		[[ -z "$server_port_s" ]] && server_port_s="1888"
 		expr ${server_port_s} + 0 &>/dev/null
@@ -231,9 +231,9 @@ Set_username(){
 	mode=$1
 	[[ -z ${mode} ]] && mode="server"
 	if [[ ${mode} == "server" ]]; then
-		echo -e "请输入 ServerStatus 服务端要设置的用户名[username]（字母/数字，不可与其他账号重复）"
+		echo -e "请输入 ServerStatus-V 服务端要设置的用户名[username]（字母/数字，不可与其他账号重复）"
 	else
-		echo -e "请输入 ServerStatus 服务端中对应配置的用户名[username]（字母/数字，不可与其他账号重复）"
+		echo -e "请输入 ServerStatus-V 服务端中对应配置的用户名[username]（字母/数字，不可与其他账号重复）"
 	fi
 	stty erase '^H' && read -p "(默认: 取消):" username_s
 	[[ -z "$username_s" ]] && echo "已取消..." && exit 0
@@ -245,9 +245,9 @@ Set_password(){
 	mode=$1
 	[[ -z ${mode} ]] && mode="server"
 	if [[ ${mode} == "server" ]]; then
-		echo -e "请输入 ServerStatus 服务端要设置的密码[password]（字母/数字，可重复）"
+		echo -e "请输入 ServerStatus-V 服务端要设置的密码[password]（字母/数字，可重复）"
 	else
-		echo -e "请输入 ServerStatus 服务端中对应配置的密码[password]（字母/数字）"
+		echo -e "请输入 ServerStatus-V 服务端中对应配置的密码[password]（字母/数字）"
 	fi
 	stty erase '^H' && read -p "(默认: p3ter.me):" password_s
 	[[ -z "$password_s" ]] && password_s="p3ter.me"
@@ -264,7 +264,7 @@ Set_name(){
 	echo "	================================================" && echo
 }
 Set_type(){
-	echo -e "请输入 ServerStatus 服务端要设置的节点虚拟化类型[type]（例如 OpenVZ / KVM）"
+	echo -e "请输入 ServerStatus-V 服务端要设置的节点虚拟化类型[type]（例如 OpenVZ / KVM）"
 	stty erase '^H' && read -p "(默认: KVM):" type_s
 	[[ -z "$type_s" ]] && type_s="KVM"
 	echo && echo "	================================================"
@@ -272,7 +272,7 @@ Set_type(){
 	echo "	================================================" && echo
 }
 Set_location(){
-	echo -e "请输入 ServerStatus 服务端要设置的节点位置[location]（支持中文，前提是你的系统和SSH工具支持中文输入）"
+	echo -e "请输入 ServerStatus-V 服务端要设置的节点位置[location]（支持中文，前提是你的系统和SSH工具支持中文输入）"
 	stty erase '^H' && read -p "(默认: Hong Kong):" location_s
 	[[ -z "$location_s" ]] && location_s="Hong Kong"
 	echo && echo "	================================================"
@@ -574,7 +574,7 @@ http://${server_s}:${server_port_s} {
 EOF
 			/etc/init.d/caddy restart
 		else
-			echo -e "${Info} 发现 Caddy 配置文件非空，开始追加 ServerStatus 网站配置内容到文件最后..."
+			echo -e "${Info} 发现 Caddy 配置文件非空，开始追加 ServerStatus-V 网站配置内容到文件最后..."
 			cat >> "/usr/local/caddy/Caddyfile"<<-EOF
 ${server_s}:${server_port_s} {
  root ${web_file}
@@ -589,7 +589,7 @@ EOF
 	fi
 }
 Install_ServerStatus_server(){
-	[[ -e "${server_file}" ]] && echo -e "${Error} 检测到 ServerStatus 服务端已安装 !" && exit 1
+	[[ -e "${server_file}" ]] && echo -e "${Error} 检测到 ServerStatus-V 服务端已安装 !" && exit 1
 	echo -e "${Info} 开始安装/配置 依赖..."
 	Installation_dependency "server"
 	Install_caddy
@@ -612,7 +612,7 @@ Install_ServerStatus_server(){
 	Start_ServerStatus_server
 }
 Install_ServerStatus_client(){
-	[[ -e ${client_file} ]] && echo -e "${Error} 检测到 ServerStatus 客户端已安装 !" && exit 1
+	[[ -e ${client_file} ]] && echo -e "${Error} 检测到 ServerStatus-V 客户端已安装 !" && exit 1
 	echo -e "${Info} 开始设置 用户配置..."
 	Set_config_client
 	echo -e "${Info} 开始安装/配置 依赖..."
@@ -636,13 +636,13 @@ Install_ServerStatus_client(){
 Start_ServerStatus_server(){
 	check_installed_server_status
 	check_pid_server
-	[[ ! -z ${PID} ]] && echo -e "${Error} ServerStatus 正在运行，请检查 !" && exit 1
+	[[ ! -z ${PID} ]] && echo -e "${Error} ServerStatus-V 正在运行，请检查 !" && exit 1
 	/etc/init.d/status-server start
 }
 Stop_ServerStatus_server(){
 	check_installed_server_status
 	check_pid_server
-	[[ -z ${PID} ]] && echo -e "${Error} ServerStatus 没有运行，请检查 !" && exit 1
+	[[ -z ${PID} ]] && echo -e "${Error} ServerStatus-V 没有运行，请检查 !" && exit 1
 	/etc/init.d/status-server stop
 }
 Restart_ServerStatus_server(){
@@ -653,7 +653,7 @@ Restart_ServerStatus_server(){
 }
 Uninstall_ServerStatus_server(){
 	check_installed_server_status
-	echo "确定要卸载 ServerStatus 服务端(如果安装了客户端 不会一起删除) ? [y/N]"
+	echo "确定要卸载 ServerStatus-V 服务端(如果安装了客户端 不会一起删除) ? [y/N]"
 	echo
 	stty erase '^H' && read -p "(默认: n):" unyn
 	[[ -z ${unyn} ]] && unyn="n"
@@ -676,7 +676,7 @@ Uninstall_ServerStatus_server(){
 		else
 			update-rc.d -f status-server remove
 		fi
-		echo && echo "ServerStatus 卸载完成 !" && echo
+		echo && echo "ServerStatus-V 卸载完成 !" && echo
 	else
 		echo && echo "卸载已取消..." && echo
 	fi
@@ -684,13 +684,13 @@ Uninstall_ServerStatus_server(){
 Start_ServerStatus_client(){
 	check_installed_client_status
 	check_pid_client
-	[[ ! -z ${PID} ]] && echo -e "${Error} ServerStatus 正在运行，请检查 !" && exit 1
+	[[ ! -z ${PID} ]] && echo -e "${Error} ServerStatus-V 正在运行，请检查 !" && exit 1
 	/etc/init.d/status-client start
 }
 Stop_ServerStatus_client(){
 	check_installed_client_status
 	check_pid_client
-	[[ -z ${PID} ]] && echo -e "${Error} ServerStatus 没有运行，请检查 !" && exit 1
+	[[ -z ${PID} ]] && echo -e "${Error} ServerStatus-V 没有运行，请检查 !" && exit 1
 	/etc/init.d/status-client stop
 }
 Restart_ServerStatus_client(){
@@ -701,7 +701,7 @@ Restart_ServerStatus_client(){
 }
 Uninstall_ServerStatus_client(){
 	check_installed_client_status
-	echo "确定要卸载 ServerStatus 客户端 ? [y/N]"
+	echo "确定要卸载 ServerStatus-V 客户端 ? [y/N]"
 	echo
 	stty erase '^H' && read -p "(默认: n):" unyn
 	[[ -z ${unyn} ]] && unyn="n"
@@ -720,7 +720,7 @@ Uninstall_ServerStatus_client(){
 		else
 			update-rc.d -f status-client remove
 		fi
-		echo && echo "ServerStatus 卸载完成 !" && echo
+		echo && echo "ServerStatus-V 卸载完成 !" && echo
 	else
 		echo && echo "卸载已取消..." && echo
 	fi
@@ -729,7 +729,7 @@ View_ServerStatus_client(){
 	check_installed_client_status
 	Read_config_client
 	clear && echo "————————————————————" && echo
-	echo -e "  ServerStatus 客户端配置信息：
+	echo -e "  ServerStatus-V 客户端配置信息：
  
   IP \t: ${Green_font_prefix}${client_server}${Font_color_suffix}
   端口 \t: ${Green_font_prefix}${client_port}${Font_color_suffix}
@@ -783,14 +783,14 @@ post-down iptables-save > /etc/iptables.up.rules" >> /etc/network/interfaces
 }
 Update_Shell(){
 	echo -e "当前版本为 [ ${sh_ver} ]，开始检测最新版本..."
-	sh_new_ver=$(wget --no-check-certificate -qO- "https://raw.githubusercontent.com/P3terChan/ServerStatus/master/status.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
+	sh_new_ver=$(wget --no-check-certificate -qO- "https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/status.sh"|grep 'sh_ver="'|awk -F "=" '{print $NF}'|sed 's/\"//g'|head -1)
 	[[ -z ${sh_new_ver} ]] && echo -e "${Error} 检测最新版本失败 !" && exit 0
 	if [[ ${sh_new_ver} != ${sh_ver} ]]; then
 		echo -e "发现新版本[ ${sh_new_ver} ]，是否更新？[Y/n]"
 		stty erase '^H' && read -p "(默认: y):" yn
 		[[ -z "${yn}" ]] && yn="y"
 		if [[ ${yn} == [Yy] ]]; then
-			wget -N --no-check-certificate https://raw.githubusercontent.com/P3terChan/ServerStatus/master/status.sh && chmod +x status.sh && bash status.sh
+			wget -N --no-check-certificate https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/status.sh && chmod +x status.sh && bash status.sh
 			echo -e "脚本已更新为最新版本[ ${sh_new_ver} ] !"
 		else
 			echo && echo "已取消..." && echo
@@ -800,8 +800,8 @@ Update_Shell(){
 	fi
 }
 menu_client(){
-echo && echo -e " ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
- https://github.com/P3terChan/ServerStatus
+echo && echo -e " ServerStatus-V 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
+ https://github.com/P3terChan/ServerStatus-V
   
  ${Green_font_prefix}0.${Font_color_suffix} 切换到 服务端菜单
 ——————————————
@@ -828,7 +828,7 @@ else
 	echo -e " 当前状态: 客户端 ${Red_font_prefix}未安装${Font_color_suffix}"
 fi
 echo
-stty erase '^H' && read -p " 请输入数字 [0-8]:" num
+stty erase '^H' && read -p " 请输入数字 [0-9]:" num
 case "$num" in
 	0)
 	menu_server
@@ -866,8 +866,8 @@ case "$num" in
 esac
 }
 menu_server(){
-echo && echo -e " ServerStatus 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
- https://github.com/P3terChan/ServerStatus
+echo && echo -e " ServerStatus-V 安装&管理脚本 ${Red_font_prefix}[v${sh_ver}]${Font_color_suffix}
+ https://github.com/P3terChan/ServerStatus-V
   
  ${Green_font_prefix}0.${Font_color_suffix} 切换到 客户端菜单
 ——————————————
@@ -927,7 +927,7 @@ case "$num" in
 	Update_Shell
 	;;
 	*)
-	echo "请输入正确数字 [0-8]"
+	echo "请输入正确数字 [0-9]"
 	;;
 esac
 }
