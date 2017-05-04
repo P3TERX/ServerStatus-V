@@ -17,7 +17,7 @@ ServerStatus-V 通过 vnStat 获取月流量数据，如未安装流量数据不
 
 执行下面的代码下载并运行脚本，如果脚本有更新，也可使用下面的命令来更新。
 ```
-wget -N --no-check-certificate https://raw.githubusercontent.com/P3terChan/ServerStatus/master/status.sh && chmod +x status.sh && bash status.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/status.sh && chmod +x status.sh && bash status.sh
 ```
 下载脚本后，根据需要安装客户端或者服务端：
 ```
