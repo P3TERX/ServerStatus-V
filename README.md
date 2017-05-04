@@ -92,6 +92,8 @@ https://github.com/P3terChan/ServerStatus-V
 
 查看状态：`service status-client status`
 
+查看客户端日志：`tail -f tmp/serverstatus_client.log`
+
 ## 服务端
 
 启动：`service status-server start`
@@ -102,17 +104,7 @@ https://github.com/P3terChan/ServerStatus-V
 
 查看状态：`service status-server status`
 
-## 目录
-
-安装目录：`/usr/local/ServerStatus`
-
-网页文件：`/usr/local/ServerStatus/web`
-
-配置文件：`/usr/local/ServerStatus/server/config.json`
-
-客户端查看日志：`tail -f tmp/serverstatus_client.log`
-
-服务端查看日志：`tail -f /tmp/serverstatus_server.log`
+查看服务端日志：`tail -f /tmp/serverstatus_server.log`
 
 ## Caddy（HTTP服务）
 
@@ -128,11 +120,19 @@ Caddy配置文件：`/usr/local/caddy/caddy`
 
 默认脚本只能一开始安装的时候设置配置文件，更多的Caddy使用方法，可以参考这些教程：https://doub.io/search/caddy
 
+# 目录
+
+安装目录：`/usr/local/ServerStatus`
+
+网页文件：`/usr/local/ServerStatus/web`
+
+配置文件：`/usr/local/ServerStatus/server/config.json`
+
 # 其他说明
 
-网络实时流量单位为：G=GB/s，M=MB/s，K=KB/s
+`实时网速`单位为：G=GB/s，M=MB/s，K=KB/s
 
-服务器总流量单位为：T=TB，G=GB，M=MB，K=KB
+`流量`单位为：T=TB，G=GB，M=MB，K=KB
 
 # 相关开源项目，感谢： 
 
