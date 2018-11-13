@@ -2,7 +2,7 @@
 
 [ServerStatus-V](https://github.com/P3terChan/ServerStatus-V) 是一个酷炫高逼格的云探针、云监控、服务器云监控、多服务器探针。使用方便，信息直观。ServerStatus-V 是 [ServerStatus 中文版](https://github.com/tenyue/ServerStatus) 项目的优化/修改版。
 
-ServerStatus-V 通过 vnStat 获取月流量数据，如未安装流量数据不会显示。[vnStat 安装教程](http://www.p3ter.me/blog/2017-05-03-Linux下使用vnStat统计VPS流量/)
+ServerStatus-V 通过 vnStat 获取月流量数据，如未安装流量数据不会显示。[vnStat 安装教程](https://p3terx.com/archives/statistics-vps-traffic-using-vnstat-under-linux.html)
 
 ![image](https://raw.githubusercontent.com/P3terChan/ServerStatus-V/master/demo-desktop.png)
 
